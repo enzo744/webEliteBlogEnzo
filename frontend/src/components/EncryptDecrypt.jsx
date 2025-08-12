@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react"; // Aggiunto useEffect
 import CryptoJS from "crypto-js";
 
-const SECRET_PASS = import.meta.envFrontend.VITE_SECRET_PASS;
+const SECRET_PASS = import.meta.env.VITE_SECRET_PASS;
 
 // Aggiungi le props: initialEmail, initialPassword, onEncryptDecrypt
 const EncryptDecrypt = () => {
