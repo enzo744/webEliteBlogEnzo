@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:true}));
 //     credentials:true
 // }))
 
-const allowedOrigins = process.env.FRONTEND_ORIGIN.split(',');
+const allowedOrigins = process.env.FRONTEND_ORIGIN
 app.use(cors({
     origin: allowedOrigins,
     credentials:true,
