@@ -11,7 +11,7 @@ const Comments = () => {
     const navigate = useNavigate()
     const getTotalComments = async()=>{
         try {
-          const res = await axios.get(`https://webeliteblogenzo.onrender.com/comment/my-blogs/comments`,{withCredentials:true})
+          const res = await axios.get(`https://webeliteblogenzo.onrender.com/api/v1/comment/my-blogs/comments`,{withCredentials:true})
           if(res.data.success){
             setAllComments(res.data.comments)
           }
@@ -55,14 +55,7 @@ const Comments = () => {
                         </TableRow>
                     ))}
                 </TableBody>
-                {/* <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={3}>Total</TableCell>
-                        <TableCell className="text-right">$2,500.00</TableCell>
-                    </TableRow>
-                </TableFooter> */}
             </Table>
-
         </Card>
     </div>
 </div>

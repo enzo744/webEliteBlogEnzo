@@ -70,7 +70,7 @@ const Profile = () => {
     try {
       setLoading(true);
       const res = await axios.put(
-        `https://webeliteblogenzo.onrender.com/user/profile/update`,
+        `https://webeliteblogenzo.onrender.com/api/v1/user/profile/update`,
         formData,
         {
           headers: {

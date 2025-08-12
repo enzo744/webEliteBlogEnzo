@@ -57,7 +57,7 @@ const ChangePassword = () => {
     try {
       // Chiamata API al nuovo endpoint del backend
       const response = await axios.put(
-        `https://webeliteblogenzo.onrender.com/user/change-password`,
+        `https://webeliteblogenzo.onrender.com/api/v1/user/change-password`,
         passwords,
         {
           withCredentials: true,

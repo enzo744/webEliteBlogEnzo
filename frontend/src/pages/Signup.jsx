@@ -32,7 +32,7 @@ const Signup = () => {
         // console.log(user)
 
         try {
-            const response = await axios.post(`https://webeliteblogenzo.onrender.com/user/register`, user, {
+            const response = await axios.post(`https://webeliteblogenzo.onrender.com/api/v1/user/register`, user, {
                 headers: {
                     "Content-Type": "application/json",
                 },

@@ -72,7 +72,7 @@ const CreateBlog = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `https://webeliteblogenzo.onrender.com/blog/`,
+        `https://webeliteblogenzo.onrender.com/api/v1/blog/`,
         { title, category },
         {
           headers: {
