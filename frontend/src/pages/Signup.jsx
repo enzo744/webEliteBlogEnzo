@@ -32,7 +32,7 @@ const Signup = () => {
         // console.log(user)
 
         try {
-            const response = await axios.post(`http://localhost:8010/api/v1/user/register`, user, {
+            const response = await axios.post(`https://webeliteblogenzo.onrender.com/user/register`, user, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -50,29 +50,6 @@ const Signup = () => {
 
 
         }
-
-        // try {
-        //     dispatch(setLoading(true))
-        //     const response = await axios.post("", user, {
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         withCredentials: true,
-        //     });
-        //     if (response.data.success) {
-        //         navigate('/login')
-        //         toast.success(response.data.message)
-        //         // setFormData({ name: "", email: "", password: "", role: "" });
-        //     } else {
-        //         toast(`Error: ${data.message || "Something went wrong"}`);
-        //     }
-        // } catch (error) {
-        //     // toast.error(error.response.data.message);
-        //     console.log(error);
-
-        // } finally {
-        //     dispatch(setLoading(false))
-        // }
     };
 
     const [showPassword, setShowPassword] = useState(false);

@@ -47,7 +47,7 @@ const YourBlog = () => {
   const getOwnBlog = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8010/api/v1/blog/get-own-blogs`,
+        `https://webeliteblogenzo.onrender.com/blog/get-own-blogs`,
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -67,7 +67,7 @@ const YourBlog = () => {
 
     try {
       const res = await axios.delete(
-        `http://localhost:8010/api/v1/blog/delete/${blogToDelete.id}`,
+        `https://webeliteblogenzo.onrender.com/blog/delete/${blogToDelete.id}`,
         { withCredentials: true }
       );
       if (res.data.success) {

@@ -61,7 +61,7 @@ const UpdateBlog = () => {
     const fetchBlog = async () => {
         try {
             setIsFetchingBlog(true);
-            const res = await axios.get(`http://localhost:8010/api/v1/blog/${id}`, {
+            const res = await axios.get(`https://webeliteblogenzo.onrender.com/blog/${id}`, {
                 withCredentials: true,
             });
             if (res.data.success) {
@@ -127,7 +127,7 @@ const UpdateBlog = () => {
         }
         try {
             setLoading(true);
-            const res = await axios.put(`http://localhost:8010/api/v1/blog/${id}`, formData, {
+            const res = await axios.put(`https://webeliteblogenzo.onrender.com/blog/${id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },
@@ -150,7 +150,7 @@ const UpdateBlog = () => {
     const togglePublishUnpublish = async () => {
         const newPublishState = !publish;
         try {
-            const res = await axios.patch(`http://localhost:8010/api/v1/blog/${id}/publish?publish=${newPublishState}`, null, {
+            const res = await axios.patch(`https://webeliteblogenzo.onrender.com/blog/${id}/publish?publish=${newPublishState}`, null, {
                 withCredentials: true
             });
             if (res.data.success) {
@@ -168,7 +168,7 @@ const UpdateBlog = () => {
 
     const handleConfirmDelete = async () => {
         try {
-            const res = await axios.delete(`http://localhost:8010/api/v1/blog/delete/${id}`, { withCredentials: true });
+            const res = await axios.delete(`https://webeliteblogenzo.onrender.com/blog/delete/${id}`, { withCredentials: true });
             if (res.data.success) {
                 const updatedBlogData = blog.filter((blogItem) => blogItem?._id !== id);
                 dispatch(setBlog(updatedBlogData));

@@ -42,7 +42,7 @@ const RecentBlog = () => {
     useEffect(() => {
         const getAllPublsihedBlogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:8010/api/v1/blog/get-published-blogs`, { withCredentials: true })
+                const res = await axios.get(`https://webeliteblogenzo.onrender.com/blog/get-published-blogs`, { withCredentials: true })
                 if (res.data.success) {
                     dispatch(setBlog(res.data.blogs))
                 }

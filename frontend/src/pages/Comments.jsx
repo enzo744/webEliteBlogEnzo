@@ -11,7 +11,7 @@ const Comments = () => {
     const navigate = useNavigate()
     const getTotalComments = async()=>{
         try {
-          const res = await axios.get(`http://localhost:8010/api/v1/comment/my-blogs/comments`,{withCredentials:true})
+          const res = await axios.get(`https://webeliteblogenzo.onrender.com/comment/my-blogs/comments`,{withCredentials:true})
           if(res.data.success){
             setAllComments(res.data.comments)
           }
