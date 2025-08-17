@@ -33,7 +33,7 @@ const Login = () => {
     // console.log(input);
     try {
       const response = await axios.post(
-        `https://webeliteblogenzo.onrender.com/api/v1/login`,
+        `https://webeliteblogenzo.onrender.com/api/v1/user/login`,
         input,
         {
           headers: {
