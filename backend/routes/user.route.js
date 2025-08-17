@@ -10,7 +10,7 @@ router.route("/login").post(login)
 router.route("/change-password").put(isAuthenticated, changePassword);
 router.route("/logout").get(logout)
 router.route("/profile/update").put(isAuthenticated, singleUpload, updateProfile)
-router.route("/all-users").get(getAllUsers);
-// router.get('/all-users', getAllUsers); uguale a quella sopra
+// router.route("/all-users").get(getAllUsers);
+router.get('/all-users', getAllUsers); //uguale a quella sopra
 
 export default router; 
