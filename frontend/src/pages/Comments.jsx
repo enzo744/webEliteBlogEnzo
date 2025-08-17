@@ -48,7 +48,7 @@ const Comments = () => {
                                 {comment.postId.title}
                             </TableCell>
                             <TableCell>{comment.content}</TableCell>
-                            <TableCell className="">{comment.userId.firstName}</TableCell>
+                            <TableCell className="">{comment.userId?.firstName}</TableCell>
                             <TableCell className="text-right flex gap-3 items-center justify-center">
                                 <Eye className='cursor-pointer' onClick={() => navigate(`/blogs/${comment.postId._id}`)} />
                             </TableCell>

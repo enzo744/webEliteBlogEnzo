@@ -11,7 +11,7 @@ const BlogCardList = ({ blog }) => {
             <div>
             <img src={blog.thumbnail} alt="" className='rounded-lg md:w-[300px] hover:scale-105 transition-all' />
             <p className="text-xs  mt-2">
-                By {blog.author.firstName} | {blog.category} | {formattedDate}
+                By {blog.author?.firstName} | {blog.category} | {formattedDate}
             </p>
 
             </div>

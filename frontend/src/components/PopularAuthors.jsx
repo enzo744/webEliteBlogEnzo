@@ -30,7 +30,7 @@ const PopularAuthors = () => {
                         popularUser?.slice(0,5)?.map((user, index) => {
                             return <div key={index} className='flex flex-col gap-2 items-center'>
                                 <img src={user.photoUrl || userLogo} alt=""  className='rounded-full h-12 w-12 md:w-32 md:h-32 xl:w-44 xl:h-44' />
-                                <p className='font-semibold'>{user.firstName} {user.lastName}</p>
+                                <p className='font-semibold'>{user?.firstName} {user.lastName}</p>
                             </div>
                         })
                     }

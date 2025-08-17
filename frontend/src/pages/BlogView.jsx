@@ -131,7 +131,7 @@ const BlogView = () => {
               </Avatar>
               <div>
                 <p className="font-medium text-blue-500">
-                  {selectedBlog.author.firstName} {selectedBlog.author.lastName}
+                  {selectedBlog.author?.firstName} {selectedBlog.author.lastName}
                 </p>
                 <p className="text-sm text-muted-foreground ">
                   {selectedBlog.author.occupation}

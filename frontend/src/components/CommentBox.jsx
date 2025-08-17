@@ -178,7 +178,7 @@ const CommentBox = ({ selectedBlog }) => {
                     <AvatarImage src={user.photoUrl} />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <h3 className='font-semibold'>{user.firstName} {user.lastName}</h3>
+                <h3 className='font-semibold'>{user?.firstName} {user.lastName}</h3>
             </div>
             <div className='flex gap-3'>
                 <Textarea
