@@ -26,7 +26,7 @@ app.use(express.urlencoded({extended:true}));
 
 // const allowedOrigins = process.env.FRONTEND_ORIGIN
 app.use(cors({
-    origin: "https://webeliteblogenzo.onrender.com/",
+    origin: "https://webeliteblogenzo.onrender.com",
     credentials:true,
 }))
 
