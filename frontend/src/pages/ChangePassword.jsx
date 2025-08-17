@@ -25,6 +25,10 @@ const ChangePassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  if (!user) {
+        return <div>Caricamento...</div>; // O un messaggio di errore
+    }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPasswords((prev) => ({
