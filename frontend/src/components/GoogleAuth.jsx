@@ -17,7 +17,7 @@ const GoogleAuth = () => {
         provider.setCustomParameters({ prompt: 'select_account' });
 
         try {
-            const firebaseResponse = await auth.signInWithPopup(auth, provider);
+            const firebaseResponse = await signInWithPopup(auth, provider);
 
             const res = await fetch('https://webeliteblogenzo.onrender.com/api/v1/user/google', {
                 method: 'POST',
