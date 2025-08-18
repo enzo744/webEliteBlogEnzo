@@ -68,10 +68,10 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
+    if (!email || !password || email === "" || password === "") {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: "Compilare i campi richiesti!",
       });
     }
 
@@ -87,11 +87,11 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(400).json({
         success: false,
-        message: "Invalid Credentials",
+        message: "Credenziali non valide!",
       });
     }
 
-    const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+    const token =  jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
     return res
@@ -112,6 +112,59 @@ export const login = async (req, res) => {
       success: false,
       message: "Failed to Login",
     });
+  }
+};
+
+export const google = async (req, res, next) => {
+  const { name, email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign(
+        {
+          userId: user._id,
+        },
+        process.env.SECRET_KEY
+      );
+
+      const { password: pass, ...rest } = user._doc
+      return res
+        .status(200)
+        .cookie("access_token", token, { httpOnly: true })
+        .json(rest);
+    }
+
+    const generatedPassword =
+      Math.random().toString(36).slice(-8) +
+      Math.random().toString(36).slice(-8);
+
+      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+
+      const newUser = new User({
+        firstName: 
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+          lastName:
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+          email,
+          password: hashedPassword,
+      });
+      await newUser.save();
+
+      const token = jwt.sign(
+        { userId: newUser._id },
+        process.env.SECRET_KEY
+      );
+
+      const { password: pass, ...rest } = newUser._doc
+      return res
+        .status(200)
+        .cookie("access_token", token, { httpsOnly: true })
+        .json(rest);
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 };
 

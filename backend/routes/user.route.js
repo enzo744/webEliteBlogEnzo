@@ -7,6 +7,8 @@ const router = express.Router()
 
 router.route("/register").post(register)
 router.route("/login").post(login)
+// Rotta per l'autenticazione con Google
+router.post("/google", google);
 router.route("/change-password").put(isAuthenticated, changePassword);
 router.route("/logout").get(logout)
 router.route("/profile/update").put(isAuthenticated, singleUpload, updateProfile)

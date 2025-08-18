@@ -1,7 +1,7 @@
 // import React from 'react'
-import Signup from "./pages/Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
+import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
@@ -17,6 +17,7 @@ import UpdateBlog from "./pages/UpdateBlog";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SearchList from "./pages/SearchList";
 import ChangePassword from "./pages/ChangePassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -174,7 +175,16 @@ const router = createBrowserRouter([
         <ChangePassword />
       </>
     )
-  }
+  },
+  {
+    path: "/forgot",
+    element: (
+      <>
+        <Navbar />
+        <ForgotPassword />
+      </>
+    ),
+  },
 ]);
 
 const App = () => {
@@ -187,4 +197,3 @@ const App = () => {
 
 export default App;
 
-// ------------------------------------ altro alternativo ------------------------------------
