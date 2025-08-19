@@ -364,10 +364,6 @@ export const likeBlog = async (req, res) => {
         .status(404)
         .json({ message: "Blog not found", success: false });
 
-    // Check if user already liked the blog
-    // const alreadyLiked = blog.likes.includes(userId);
-
-    //like logic started
     await blog.updateOne({ $addToSet: { likes: likeKrneWalaUserKiId } });
     await blog.save();
 
