@@ -1,3 +1,4 @@
+// Login.jsx pagina di login
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/authSlice";
+import { signInSuccess } from "@/redux/authSlice";
 import auth from "../assets/auth.jpg";
 import GoogleAuth from "@/components/GoogleAuth";
 
@@ -44,7 +45,8 @@ const Login = () => {
       );
       if (response.data.success) {
         navigate("/");
-        dispatch(setUser(response.data.user));
+        // dispatch(setUser(response.data.user));
+        dispatch(signInSuccess(response.data.user));
         toast.success(response.data.message);
       }
     } catch (error) {
