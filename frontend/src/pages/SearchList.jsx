@@ -9,14 +9,11 @@ const SearchList = () => {
   const query = params.get("q");
   const { blog } = useSelector((store) => store.blog);
 
-  // console.log(blog);
-
-  const filteredBlogs = blog.filter(
+  const filteredBlogs = blog?.filter(
     (blog) =>
-      blog.title.toLowerCase().includes(query) ||
-      blog.subtitle.toLowerCase().includes(query) ||
-      blog.category.toLowerCase() === query.toLowerCase()
-  );
+      blog.title?.toLowerCase().includes(query) ||
+      blog.subtitle?.toLowerCase().includes(query) ||
+      blog.category?.toLowerCase() === query?.toLowerCase()) || [];
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
