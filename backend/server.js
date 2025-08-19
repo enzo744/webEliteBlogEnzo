@@ -19,11 +19,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
 
-// Middleware per impostare la politica COOP
-app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
-    next();
-});
+// // Middleware per impostare la politica COOP
+// app.use((req, res, next) => {
+//     res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
+//     next();
+// });
 
 // const allowedOrigins = process.env.FRONTEND_ORIGIN
 app.use(cors({

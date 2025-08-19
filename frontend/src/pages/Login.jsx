@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "@/redux/authSlice";
 import auth from "../assets/auth.jpg";
-import GoogleAuth from "@/components/GoogleAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -114,29 +113,15 @@ const Login = () => {
               <Button type="submit" className="w-full">
                 Accedi
               </Button>
-              
-              <div className="flex justify-between items-center ">
-                <p className="text-center text-gray-600 dark:text-gray-300">
-                  Non hai un account?{" "}
-                  <Link to={"/signup"}>
-                    <span className="underline cursor-pointer hover:text-gray-800">
-                      Registrati
-                    </span>
-                  </Link>
-                </p>
-                <p className="text-center text-gray-600 dark:text-gray-300">
-                  Hai dimenticato la password?{" "}
-                  <Link to={"/forgot"}>
-                    <span className="underline cursor-pointer hover:text-gray-800">
-                      Clicca qui
-                    </span>
-                  </Link>
-                </p>
-              </div>
+              <p className="text-center text-gray-600 dark:text-gray-300">
+                Non hai un account?{" "}
+                <Link to={"/signup"}>
+                  <span className="underline cursor-pointer hover:text-gray-800">
+                    Registrati
+                  </span>
+                </Link>
+              </p>
             </form>
-            <div className="mt-4">
-              <GoogleAuth /> 
-            </div>
           </CardContent>
         </Card>
       </div>
@@ -145,4 +130,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -115,59 +115,6 @@ export const login = async (req, res) => {
   }
 };
 
-export const google = async (req, res, next) => {
-  const { name, email } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user) {
-      const token = jwt.sign(
-        {
-          userId: user._id,
-        },
-        process.env.SECRET_KEY
-      );
-
-      const { password: pass, ...rest } = user._doc
-      return res
-        .status(200)
-        .cookie("access_token", token, { httpOnly: true })
-        .json(rest);
-    }
-
-    const generatedPassword =
-      Math.random().toString(36).slice(-8) +
-      Math.random().toString(36).slice(-8);
-
-      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
-
-      const newUser = new User({
-        firstName: 
-          name.toLowerCase().split(" ").join("") +
-          Math.random().toString(9).slice(-4),
-          lastName:
-          name.toLowerCase().split(" ").join("") +
-          Math.random().toString(9).slice(-4),
-          email,
-          password: hashedPassword,
-      });
-      await newUser.save();
-
-      const token = jwt.sign(
-        { userId: newUser._id },
-        process.env.SECRET_KEY
-      );
-
-      const { password: pass, ...rest } = newUser._doc
-      return res
-        .status(200)
-        .cookie("access_token", token, { httpsOnly: true })
-        .json(rest);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-};
-
 export const logout = async (_, res) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
@@ -237,15 +184,8 @@ export const updateProfile = async (req, res) => {
           // Non bloccare l'aggiornamento del profilo se l'eliminazione fallisce
         }
       }
-      //   else if (user.photoPublicId && user.photoPublicId === newPhotoPublicId) {
-      //       console.log("La nuova foto ha lo stesso publicId della vecchia. Nessuna eliminazione necessaria.");
-      //   } else {
-      //       console.log("Nessun vecchio publicId trovato per l'eliminazione.");
-      //   }
-      // } else {
       //     console.log("Nessun nuovo file foto fornito. Mantenendo la foto esistente.");
     }
-    // --- FINE LOGICA FOTO ---
 
     // Aggiorna i campi testuali del profilo
     if (firstName) user.firstName = firstName;

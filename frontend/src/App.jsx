@@ -17,7 +17,6 @@ import UpdateBlog from "./pages/UpdateBlog";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SearchList from "./pages/SearchList";
 import ChangePassword from "./pages/ChangePassword";
-import ForgotPassword from "./pages/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -175,15 +174,6 @@ const router = createBrowserRouter([
         <ChangePassword />
       </>
     )
-  },
-  {
-    path: "/forgot",
-    element: (
-      <>
-        <Navbar />
-        <ForgotPassword />
-      </>
-    ),
   },
 ]);
 
