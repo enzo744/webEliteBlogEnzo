@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { signInSuccess } from "@/redux/authSlice";
+import { setUser } from "@/redux/authSlice";
 import auth from "../assets/auth.jpg";
 
 const Login = () => {
@@ -44,8 +44,8 @@ const Login = () => {
       );
       if (response.data.success) {
         navigate("/");
-        // dispatch(setUser(response.data.user));
-        dispatch(signInSuccess(response.data.user));
+        dispatch(setUser(response.data.user));
+        // dispatch(signInSuccess(response.data.user));
         toast.success(response.data.message);
       }
     } catch (error) {
@@ -113,14 +113,14 @@ const Login = () => {
               <Button type="submit" className="w-full">
                 Accedi
               </Button>
-              <p className="text-center text-gray-600 dark:text-gray-300">
-                Non hai un account?{" "}
-                <Link to={"/signup"}>
-                  <span className="underline cursor-pointer hover:text-gray-800">
-                    Registrati
-                  </span>
-                </Link>
-              </p>
+                <p className="text-center text-gray-600 dark:text-gray-300">
+                  Non hai un account?{" "}
+                  <Link to={"/signup"}>
+                    <span className="underline cursor-pointer hover:text-gray-800">
+                      Registrati
+                    </span>
+                  </Link>
+                </p>
             </form>
           </CardContent>
         </Card>
@@ -130,3 +130,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -121,8 +121,8 @@ const Signup = () => {
                                 </button>
                             </div>
 
-                            <Button type="submit" className="w-full">Sign Up</Button>
-                            <p className='text-center text-gray-600 dark:text-gray-300'>Already have an account? <Link to={'/login'}><span className='underline cursor-pointer hover:text-gray-800 dark:hover:text-gray-100'>Sign in</span></Link></p>
+                            <Button type="submit" className="w-full">Registrati</Button>
+                            <p className='text-center text-gray-600 dark:text-gray-300'>Hai un account? <Link to={'/login'}><span className='underline cursor-pointer hover:text-gray-800 dark:hover:text-gray-100'>Accedi</span></Link></p>
                         </form>
                     </CardContent>
                 </Card>
