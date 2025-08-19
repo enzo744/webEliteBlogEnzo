@@ -1,4 +1,6 @@
 import { User } from "../models/user.model.js";
+import { Blog } from "../models/blog.model.js";
+import { Comment } from "../models/comment.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/dataUri.js";
@@ -91,7 +93,7 @@ export const login = async (req, res) => {
       });
     }
 
-    const token =  jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
     return res
@@ -305,6 +307,79 @@ export const changePassword = async (req, res) => {
       success: false,
       message:
         "Si è verificato un errore durante l'aggiornamento della password.",
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.id; // Ottiene l'ID dell'utente autenticato
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is missing from the request.",
+      });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Utente non trovato.",
+      });
+    } // Fase 1: Eliminare tutti i blog dell'utente
+
+    const userBlogs = await Blog.find({ author: userId });
+    for (const blog of userBlogs) {
+      // Elimina la thumbnail del blog da Cloudinary
+      if (blog.thumbnailPublicId) {
+        try {
+          await cloudinary.uploader.destroy(blog.thumbnailPublicId);
+          console.log(
+            `Thumbnail del blog ${blog._id} eliminata da Cloudinary.`
+          );
+        } catch (cloudinaryError) {
+          console.error(
+            `Errore nell'eliminazione della thumbnail da Cloudinary:`,
+            cloudinaryError
+          );
+        }
+      } // Elimina tutti i commenti associati al blog
+      await Comment.deleteMany({ postId: blog._id });
+    } // Dopo aver eliminato thumbnail e commenti, elimina i blog
+
+    await Blog.deleteMany({ author: userId }); // Fase 2: Eliminare i commenti dell'utente su blog altrui
+
+    await Comment.deleteMany({ userId: userId }); // Fase 3: Eliminare la foto profilo dell'utente da Cloudinary
+
+    if (user.photoPublicId) {
+      try {
+        await cloudinary.uploader.destroy(user.photoPublicId);
+        console.log(
+          `Foto profilo dell'utente ${userId} eliminata da Cloudinary.`
+        );
+      } catch (cloudinaryError) {
+        console.error(
+          `Errore nell'eliminazione della foto profilo da Cloudinary:`,
+          cloudinaryError
+        );
+      }
+    } // Fase 4: Eliminare l'utente dal database
+    await User.findByIdAndDelete(userId); // Fase 5: Logout forzato
+
+    res.clearCookie("token", { maxAge: 0 }); // Rimuovi il token di autenticazione
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Account eliminato con successo. Tutti i blog e i commenti associati sono stati cancellati.",
+    });
+  } catch (error) {
+    console.error("Errore durante l'eliminazione dell'utente:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Si è verificato un errore durante l'eliminazione dell'account.",
+      error: error.message,
     });
   }
 };

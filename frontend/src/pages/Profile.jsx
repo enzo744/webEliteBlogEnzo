@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
 // import { Avatar, AvatarImage } from "@/components/ui/avatar";
 // import { Card } from "@/components/ui/card";
 // import React, { useState, useEffect } from "react";
@@ -29,19 +29,40 @@
 //   const dispatch = useDispatch();
 //   const [open, setOpen] = useState(false);
 //   const [loading, setLoading] = useState(false);
-//   const { user } = useSelector((store) => store.auth);
-//   // const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  
+//   // Ho aggiunto isAuthenticated e loading dallo store Redux
+//   const { user, isAuthenticated, loading: authLoading } = useSelector(
+//     (store) => store.auth
+//   );
+
 //   const [input, setInput] = useState({
-//     firstName: user?.firstName,
-//     lastName: user?.lastName,
-//     occupation: user?.occupation,
-//     bio: user?.bio,
-//     facebook: user?.facebook,
-//     linkedin: user?.linkedin,
-//     github: user?.github,
-//     instagram: user?.instagram,
-//     file: user?.photoUrl,
+//     firstName: "",
+//     lastName: "",
+//     occupation: "",
+//     bio: "",
+//     facebook: "",
+//     linkedin: "",
+//     github: "",
+//     instagram: "",
+//     file: null,
 //   });
+
+//   // ✅ CORREZIONE CHIAVE: Usa useEffect per popolare lo stato 'input' solo quando 'user' è disponibile
+//   useEffect(() => {
+//     if (user) {
+//       setInput({
+//         firstName: user.firstName || "",
+//         lastName: user.lastName || "",
+//         occupation: user.occupation || "",
+//         bio: user.bio || "",
+//         facebook: user.facebook || "",
+//         linkedin: user.linkedin || "",
+//         github: user.github || "",
+//         instagram: user.instagram || "",
+//         file: user.photoUrl || null,
+//       });
+//     }
+//   }, [user]); // L'effetto si attiva ogni volta che 'user' cambia nello store
 
 //   const changeEventHandler = (e) => {
 //     const { name, value } = e.target;
@@ -54,6 +75,7 @@
 //   const changeFileHandler = (e) => {
 //     setInput({ ...input, file: e.target.files?.[0] });
 //   };
+
 //   const submitHandler = async (e) => {
 //     e.preventDefault();
 //     const formData = new FormData();
@@ -93,6 +115,25 @@
 //     }
 //   };
 
+//   // ✅ CORREZIONE CHIAVE: Renderizza un loader se l'autenticazione è in corso
+//   if (authLoading) {
+//     return (
+//       <div className="flex items-center justify-center h-screen">
+//         <Loader2 className="h-10 w-10 animate-spin text-gray-500" />
+//       </div>
+//     );
+//   }
+
+//   // ✅ CORREZIONE CHIAVE: Reindirizza o mostra un messaggio se l'utente non è autenticato
+//   if (!user) {
+//     return (
+//       <div className="flex items-center justify-center h-screen">
+//         <p className="text-xl">Utente non trovato. Riprova il login.</p>
+//       </div>
+//     );
+//   }
+
+//   // Il resto del componente viene renderizzato solo dopo i controlli
 //   return (
 //     <div className="pt-20 md:ml-[320px] md:h-screen">
 //       <div className="max-w-6xl mx-auto mt-8 ">
@@ -106,7 +147,7 @@
 //               {user?.occupation || "Mern Stack Developer"}
 //             </h1>
 //             <div className="flex gap-4 items-center">
-//               <Link>
+//               <Link to={`${user?.facebook}`} target="_blank">
 //                 <FaFacebook className="w-6 h-6 text-gray-800 dark:text-gray-300" />
 //               </Link>
 //               <Link to={`${user?.linkedin}`} target="_blank">
@@ -115,7 +156,7 @@
 //               <Link to={`${user?.github}`} target="_blank">
 //                 <FaGithub className="w-6 h-6 dark:text-gray-300 text-gray-800" />
 //               </Link>
-//               <Link>
+//               <Link to={`${user?.instagram}`} target="_blank">
 //                 <FaInstagram className="w-6 h-6 text-gray-800 dark:text-gray-300" />
 //               </Link>
 //             </div>
@@ -242,16 +283,16 @@
 //                       />
 //                     </div>
 //                     <div>
-//                         <Label>Occupation</Label>
-//                         <Input
-//                           id="occupation"
-//                           name="occupation"
-//                           value={input.occupation}
-//                           onChange={changeEventHandler}
-//                           placeholder="Enter a URL"
-//                           className="col-span-3 text-gray-500"
-//                         />
-//                       </div>
+//                       <Label>Occupation</Label>
+//                       <Input
+//                         id="occupation"
+//                         name="occupation"
+//                         value={input.occupation}
+//                         onChange={changeEventHandler}
+//                         placeholder="Enter a URL"
+//                         className="col-span-3 text-gray-500"
+//                       />
+//                     </div>
 //                     <div>
 //                       <Label htmlFor="name" className="text-right">
 //                         Picture
@@ -280,7 +321,7 @@
 //               {/* ✅ Nuovo pulsante per la modifica della password */}
 //               <Link to="/change-password">
 //                 <Button className="max-w-fit text-[12px] font-medium text-purple-700 hover:text-blue-500 hover:bg-orange-400 border-b-2 hover:border-purple-400
-//                    bg-orange-200 dark:border-white">Modifica Password</Button>
+//                      bg-orange-200 dark:border-white">Modifica Password</Button>
 //               </Link>
 //             </div>
 //           </div>
@@ -290,15 +331,16 @@
 //     </div>
 //   );
 // };
-
 // export default Profile;
+
 
 /* eslint-disable no-unused-vars */
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import userLogo from "../assets/user.jpg";
+// Sostituito l'import locale con un'immagine placeholder per evitare errori di compilazione.
+const userLogo = "https://placehold.co/160x160/cccccc/444444?text=User";
 import { FaFacebook, FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import { Label } from "@/components/ui/label";
 import {
@@ -319,13 +361,16 @@ import { toast } from "sonner";
 import { setUser } from "@/redux/authSlice";
 import TotalProperty from "@/components/TotalProperty";
 import { ChangePassword } from "./ChangePassword";
+import { logOut } from "@/redux/authSlice"; // Assicurati che il percorso sia corretto
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  // Ho aggiunto isAuthenticated e loading dallo store Redux
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false); // Nuovo stato per il dialog di eliminazione
+  const [isDeleting, setIsDeleting] = useState(false); // Stato di caricamento per l'eliminazione
+
   const { user, isAuthenticated, loading: authLoading } = useSelector(
     (store) => store.auth
   );
@@ -342,7 +387,6 @@ const Profile = () => {
     file: null,
   });
 
-  // ✅ CORREZIONE CHIAVE: Usa useEffect per popolare lo stato 'input' solo quando 'user' è disponibile
   useEffect(() => {
     if (user) {
       setInput({
@@ -357,7 +401,7 @@ const Profile = () => {
         file: user.photoUrl || null,
       });
     }
-  }, [user]); // L'effetto si attiva ogni volta che 'user' cambia nello store
+  }, [user]);
 
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
@@ -410,7 +454,35 @@ const Profile = () => {
     }
   };
 
-  // ✅ CORREZIONE CHIAVE: Renderizza un loader se l'autenticazione è in corso
+  /**
+   * Gestisce la logica di eliminazione dell'utente.
+   * Visualizza un toast di successo, esegue il logout tramite Redux
+   * e reindirizza l'utente alla pagina di login.
+   */
+  const handleDeleteUser = async () => {
+    try {
+      setIsDeleting(true);
+      // Endpoint per eliminare l'utente (da confermare con il tuo backend)
+      const res = await axios.delete(
+        `https://webeliteblogenzo.onrender.com/api/v1/user/delete-account`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        dispatch(logOut()); // Esegue il logout
+        navigate('/login'); // Reindirizza l'utente dopo l'eliminazione
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Errore durante l'eliminazione dell'account.");
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteDialog(false); // Chiude il dialog
+    }
+  };
+
   if (authLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -419,7 +491,6 @@ const Profile = () => {
     );
   }
 
-  // ✅ CORREZIONE CHIAVE: Reindirizza o mostra un messaggio se l'utente non è autenticato
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -428,7 +499,6 @@ const Profile = () => {
     );
   }
 
-  // Il resto del componente viene renderizzato solo dopo i controlli
   return (
     <div className="pt-20 md:ml-[320px] md:h-screen">
       <div className="max-w-6xl mx-auto mt-8 ">
@@ -467,7 +537,7 @@ const Profile = () => {
             </p>
             <div className="flex flex-col gap-2 items-start justify-start my-5">
               <Label className="">Description</Label>
-              <p className="border dark:border-gray-600 p-5  rounded-lg">
+              <p className="border dark:border-gray-600 p-5  rounded-lg">
                 {user?.bio ||
                   "Sono uno sviluppatore web e creatore di contenuti, specializzato in tecnologie frontend. Quando non scrivo codice, mi trovate a scrivere di tecnologia."}
               </p>
@@ -613,11 +683,54 @@ const Profile = () => {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              {/* ✅ Nuovo pulsante per la modifica della password */}
+              {/* Pulsante per la modifica della password */}
               <Link to="/change-password">
                 <Button className="max-w-fit text-[12px] font-medium text-purple-700 hover:text-blue-500 hover:bg-orange-400 border-b-2 hover:border-purple-400
-                     bg-orange-200 dark:border-white">Modifica Password</Button>
+                      bg-orange-200 dark:border-white">Modifica Password</Button>
               </Link>
+
+              {/* Nuovo pulsante per eliminare l'account */}
+              <Button
+                variant="destructive"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                Elimina Account
+              </Button>
+
+              {/* Dialogo di conferma per l'eliminazione */}
+              <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Conferma Eliminazione Account</DialogTitle>
+                    <DialogDescription>
+                      Sei sicuro di voler eliminare il tuo account? Tutti i tuoi
+                      dati, inclusi i blog e i commenti, verranno eliminati
+                      definitivamente. Questa azione non può essere annullata.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowDeleteDialog(false)}
+                    >
+                      Annulla
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={handleDeleteUser}
+                      disabled={isDeleting}
+                    >
+                      {isDeleting ? (
+                        <>
+                          <Loader2 className="mr-2 w-4 h-4 animate-spin" /> In corso...
+                        </>
+                      ) : (
+                        "Conferma Eliminazione"
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </Card>
