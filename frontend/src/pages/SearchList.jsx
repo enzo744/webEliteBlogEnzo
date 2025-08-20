@@ -9,11 +9,18 @@ const SearchList = () => {
   const query = params.get("q");
   const { blog } = useSelector((store) => store.blog);
 
-  const filteredBlogs = blog?.filter(
-    (blog) =>
-      blog?.title.toLowerCase().includes(query) ||
-            blog?.subtitle.toLowerCase().includes(query) ||
-            blog?.category.toLowerCase().includes(query));
+  const filteredBlogs = blog?.filter((blog) => {
+  const title = blog?.title?.toLowerCase() || "";
+  const subtitle = blog?.subtitle?.toLowerCase() || "";
+  const category = blog?.category?.toLowerCase() || "";
+
+  return (
+    title.includes(query?.toLowerCase()) ||
+    subtitle.includes(query?.toLowerCase()) ||
+    category.includes(query?.toLowerCase())
+  );
+});
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
