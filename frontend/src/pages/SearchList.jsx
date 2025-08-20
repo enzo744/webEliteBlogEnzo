@@ -13,7 +13,7 @@ const SearchList = () => {
     (blog) =>
       blog?.title.toLowerCase().includes(query) ||
             blog?.subtitle.toLowerCase().includes(query) ||
-            blog?.category.toLowerCase() === query.toLowerCase());
+            blog?.category.toLowerCase().includes(query));
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
