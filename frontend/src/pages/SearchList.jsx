@@ -11,9 +11,9 @@ const SearchList = () => {
 
   const filteredBlogs = blog?.filter(
     (blog) =>
-      blog.title?.includes(query) ||
-      blog.subtitle?.includes(query) ||
-      blog.category === query || []);
+      blog?.title.toLowerCase().includes(query) ||
+            blog?.subtitle.toLowerCase().includes(query) ||
+            blog?.category.toLowerCase() === query.toLowerCase());
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
